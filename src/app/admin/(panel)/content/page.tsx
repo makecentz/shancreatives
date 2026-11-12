@@ -20,8 +20,8 @@ export default async function ContentPage() {
   return (
     <div className="space-y-8">
       <AdminHeader title="Website Content" subtitle="Homepage, branding, about and contact details." />
-      <PageIntro>Save a draft as often as you like; the live storefront only changes when you tick &ldquo;Publish&rdquo;. {state.publishedAt ? `Last published ${formatDate(state.publishedAt)}.` : ""} {state.hasUnpublished ? <Pill tone="amber">Unpublished changes</Pill> : null}</PageIntro>
-      <ActionForm action={saveSiteContent} submitLabel="Save content" disabled={demo} className="space-y-6">
+      <PageIntro>Save a draft as often as you like; the live storefront only changes when you click &ldquo;Publish to live site&rdquo;. {state.publishedAt ? `Last published ${formatDate(state.publishedAt)}.` : ""} {state.hasUnpublished ? <Pill tone="amber">Unpublished changes</Pill> : null}</PageIntro>
+      <ActionForm action={saveSiteContent} submitLabel="Publish to live site" submitName="publish" submitValue="1" secondary={{ label: "Save draft", name: "publish", value: "0" }} disabled={demo} className="space-y-6">
         <Card title="Branding">
           <div className="grid gap-4 md:grid-cols-2">
             <Field label="Logo" hint="Defaults to the Shagannan Shenanigans crown logo."><AssetInput name="logoUrl" defaultValue={d.logoUrl} demo={demo} /></Field>
@@ -59,7 +59,7 @@ export default async function ContentPage() {
             <Field label="Pinterest URL"><input name="pinterest" type="url" defaultValue={d.socialLinks.pinterest ?? ""} className={adminInput} /></Field>
           </div>
         </Card>
-        <label className="flex items-center gap-2 text-sm font-medium"><input type="checkbox" name="publish" value="1" className="size-4 accent-admin-purple" />Publish to the live site now</label>
+        <p className="text-sm text-admin-muted">&ldquo;Save draft&rdquo; keeps your changes private. &ldquo;Publish to live site&rdquo; saves them and updates the storefront right away.</p>
       </ActionForm>
 
       <div className="space-y-4">
