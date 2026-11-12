@@ -34,7 +34,12 @@ export default async function ContentPage() {
             <Field label="Eyebrow"><input name="heroEyebrow" defaultValue={d.heroEyebrow} className={adminInput} /></Field>
             <Field label="Headline"><input name="heroHeadline" defaultValue={d.heroHeadline} className={adminInput} /></Field>
             <Field label="Description" className="md:col-span-2"><textarea name="heroDescription" rows={3} defaultValue={d.heroDescription} className={area} /></Field>
-            <Field label="Hero image" className="md:col-span-2"><AssetInput name="heroImageUrl" defaultValue={d.heroImageUrl} demo={demo} /></Field>
+            <Field label="Hero background video" className="md:col-span-2" hint="MP4 (H.264), MOV or WebM, up to 50 MB. Best: 1920 × 1080 (16:9), 10 to 20 seconds, looping, no sound needed. The video fills the whole hero behind the text; the left side is softened so the words stay readable, so keep the main subject on the right half and away from the top and bottom edges, which get cropped on phones. Leave blank to show the color background.">
+              <AssetInput name="heroVideoUrl" defaultValue={d.heroVideoUrl} demo={demo} bucket="site-videos" maxMb={50} accept="video/mp4,video/webm,video/quicktime,.mp4,.webm,.mov" preview="video" />
+            </Field>
+            <Field label="Video cover image" className="md:col-span-2" hint="Optional. Shown while the video loads, and instead of the video for visitors who turn off motion. Use a still frame from the video, 1920 × 1080 JPG or WebP.">
+              <AssetInput name="heroVideoPosterUrl" defaultValue={d.heroVideoPosterUrl} demo={demo} accept="image/jpeg,image/webp,image/png" preview="image" />
+            </Field>
             <Field label="Primary button label"><input name="primaryLabel" defaultValue={d.heroPrimaryCta.label} className={adminInput} /></Field>
             <Field label="Primary button link"><input name="primaryHref" defaultValue={d.heroPrimaryCta.href} className={adminInput} /></Field>
             <Field label="Secondary button label"><input name="secondaryLabel" defaultValue={d.heroSecondaryCta.label} className={adminInput} /></Field>

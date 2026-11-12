@@ -183,6 +183,10 @@ export interface SiteContent {
   heroHeadline: string;
   heroDescription: string;
   heroImageUrl: string;
+  /** Background video for the homepage hero (MP4/WebM in the site-videos bucket). */
+  heroVideoUrl?: string | null;
+  /** Still image shown while the hero video loads, and to visitors who prefer reduced motion. */
+  heroVideoPosterUrl?: string | null;
   heroPrimaryCta: { label: string; href: string };
   heroSecondaryCta: { label: string; href: string };
   promoBanner: string | null;
