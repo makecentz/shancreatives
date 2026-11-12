@@ -1,10 +1,11 @@
 "use client";
 
-import { Loader2, Upload } from "lucide-react";
+import { Film, Loader2, Upload } from "lucide-react";
 import * as React from "react";
 import { adminInput } from "./ui";
 
 const EXT_TYPES: Record<string, string> = { mp4: "video/mp4", m4v: "video/mp4", mov: "video/quicktime", webm: "video/webm", jpg: "image/jpeg", jpeg: "image/jpeg", png: "image/png", webp: "image/webp", svg: "image/svg+xml", ico: "image/x-icon" };
+const VIDEO_TYPES = ["video/mp4", "video/quicktime", "video/webm"];
 const LABELS: Record<string, string> = { "video/quicktime": "MOV", "image/svg+xml": "SVG", "image/x-icon": "ICO" };
 
 type Props = {
@@ -33,7 +34,8 @@ export function AssetInput({ name, defaultValue, demo, accept = "image/png,image
     const allowed = accept.split(",").map((s) => s.trim()).filter((t) => t.includes("/"));
     const ext = file.name.split(".").pop()?.toLowerCase() ?? "";
     const type = file.type || EXT_TYPES[ext] || "";
-    if (!allowed.includes(type)) return setErr(`That file type isn't supported. Use ${allowed.map((t) => LABELS[t] ?? t.split("/")[1]?.toUpperCase()).join(" or ")}.`);
+    const ok = allowed.includes(type) || allowed.some((a) => a.endsWith("/*") && type.startsWith(a.slice(0, -1)));
+    if (!ok || (kind === "video" && !VIDEO_TYPES.includes(type))) return setErr(kind === "video" ? "Use an MP4, MOV or WebM video." : `That file type isn't supported. Use ${allowed.map((t) => LABELS[t] ?? t.split("/")[1]?.toUpperCase()).join(" or ")}.`);
     if (file.size > maxMb * 1024 * 1024) return setErr(`Use a ${kind} up to ${maxMb} MB. This one is ${(file.size / 1024 / 1024).toFixed(1)} MB.`);
     setBusy(true);
     const { supabaseBrowser } = await import("@/lib/supabase/client");
@@ -48,7 +50,7 @@ export function AssetInput({ name, defaultValue, demo, accept = "image/png,image
       <div className="flex gap-2">
         <input name={name} value={value} onChange={(e) => setValue(e.target.value)} className={adminInput} placeholder={kind === "video" ? "Upload a video or paste an https:// link" : "/brand/logo.svg or https://…"} />
         <label className="inline-flex h-10 shrink-0 cursor-pointer items-center gap-1.5 rounded-lg border border-admin-border bg-white px-3 text-sm hover:bg-admin-lavender">
-          {busy ? <Loader2 className="size-4 animate-spin" /> : <Upload className="size-4" />}{busy ? "Uploading…" : "Upload"}
+          {busy ? <Loader2 className="size-4 animate-spin" /> : kind === "video" ? <Film className="size-4" /> : <Upload className="size-4" />}{busy ? "Uploading…" : kind === "video" ? "Upload video" : "Upload"}
           <input type="file" accept={accept} className="sr-only" disabled={busy} onChange={(e) => upload(e.target.files?.[0])} />
         </label>
         {value ? <button type="button" onClick={() => setValue("")} className="h-10 shrink-0 rounded-lg px-3 text-sm text-admin-muted hover:bg-admin-lavender">Clear</button> : null}
