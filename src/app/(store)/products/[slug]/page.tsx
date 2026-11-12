@@ -6,7 +6,7 @@ import { ProductGallery } from "@/components/store/product-gallery";
 import { ProductPurchase } from "@/components/store/product-purchase";
 import { Container } from "@/components/store/section";
 import { isInStock, productionEstimate } from "@/lib/catalog";
-import { getCategories, getProductBySlug, getRelatedProducts } from "@/lib/data/catalog";
+import { getProductBySlug, getRelatedProducts, getStoreCategories } from "@/lib/data/catalog";
 import { isDemoMode, siteUrl } from "@/lib/env";
 import { startingPrice } from "@/lib/pricing";
 
@@ -29,7 +29,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
   const { slug } = await params;
   const product = await getProductBySlug(slug);
   if (!product || (product.status !== "active" && product.status !== "out_of_stock")) notFound();
-  const [related, categories] = await Promise.all([getRelatedProducts(product), getCategories()]);
+  const [related, categories] = await Promise.all([getRelatedProducts(product), getStoreCategories()]);
   const primaryCategory = categories.find((c) => product.categoryIds.includes(c.id));
   const estimate = productionEstimate(product);
 
@@ -73,12 +73,12 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
               {product.fulfillmentType !== "ready_made" ? <Badge tone="tan">Customizable</Badge> : null}
               {product.fulfillmentType !== "custom" ? <Badge>Ready made</Badge> : null}
               {product.isSeasonal ? <Badge tone="outline">Seasonal</Badge> : null}
-              {product.isDemo ? <Badge tone="outline">Demo product</Badge> : null}
+              {product.isDemo ? <Badge tone="outline">Sample product</Badge> : null}
             </div>
             <h1 className="font-heading text-3xl font-bold leading-tight tracking-tight sm:text-[42px]">{product.name}</h1>
             <p className="mt-3 text-base text-store-muted">{product.shortDescription}</p>
             <div className="mt-8">
-              <ProductPurchase product={product} productionEstimate={estimate} demo={isDemoMode()} />
+              <ProductPurchase product={product} productionEstimate={estimate} demo={isDemoMode()} sample={!!product.isDemo && !isDemoMode()} />
             </div>
             <div className="mt-10 border-t border-store-border pt-8">
               <h2 className="font-heading text-lg font-bold">Details</h2>

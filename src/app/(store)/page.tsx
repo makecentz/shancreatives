@@ -6,7 +6,7 @@ import { NewsletterForm } from "@/components/store/newsletter-form";
 import { ProductCard } from "@/components/store/product-card";
 import { Container, SectionHeading } from "@/components/store/section";
 import { buttonVariants } from "@/components/ui/button";
-import { getCategories, getFeaturedProducts, getSiteContent } from "@/lib/data/catalog";
+import { getFeaturedProducts, getSiteContent, getStoreCategories } from "@/lib/data/catalog";
 import { cn } from "@/lib/utils";
 
 const TINTS = ["bg-store-blush", "bg-store-sage", "bg-store-butter", "bg-store-sky", "bg-store-cream", "bg-store-blush"];
@@ -17,7 +17,7 @@ const STEP_TONES = [
 ];
 
 export default async function HomePage() {
-  const [content, categories, featured] = await Promise.all([getSiteContent(), getCategories(), getFeaturedProducts(8)]);
+  const [content, categories, featured] = await Promise.all([getSiteContent(), getStoreCategories(), getFeaturedProducts(8)]);
 
   return (
     <>

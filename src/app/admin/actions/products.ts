@@ -99,3 +99,17 @@ export async function setProductStatus(productId: string, status: "draft" | "act
 export async function setProductStatusFromForm(productId: string, form: FormData) {
   return setProductStatus(productId, String(form.get("status")) as "draft" | "active" | "archived");
 }
+
+/** Shows or hides the labelled sample products on the live storefront. */
+export async function setSampleProducts(form: FormData): Promise<ActionResult> {
+  return run(async () => {
+    const { session, db } = await guard("content.manage");
+    const enabled = form.get("enabled") === "1";
+    const payload = { enabled };
+    const { error } = await db.from("site_content").upsert({ key: "samples", draft: payload, published: payload, published_at: new Date().toISOString(), updated_by: session.userId }, { onConflict: "key" });
+    if (error) throw error;
+    await audit(session, enabled ? "samples.show" : "samples.hide", "site_content", "samples", null, payload);
+    revalidatePath("/", "layout");
+    return { ok: true, message: enabled ? "Sample products are now showing on the store" : "Sample products are hidden from the store" };
+  });
+}

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CatalogView } from "@/components/store/catalog-view";
 import { Container } from "@/components/store/section";
-import { getCategories, getCategoryBySlug, getProducts } from "@/lib/data/catalog";
+import { getCategoryBySlug, getStoreCategories, getStoreProducts } from "@/lib/data/catalog";
 
 export async function generateMetadata({ params }: PageProps<"/collections/[slug]">): Promise<Metadata> {
   const { slug } = await params;
@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: PageProps<"/collections/[slug
 
 export default async function CollectionPage({ params, searchParams }: PageProps<"/collections/[slug]">) {
   const [{ slug }, sp] = await Promise.all([params, searchParams]);
-  const [category, products, categories] = await Promise.all([getCategoryBySlug(slug), getProducts(), getCategories()]);
+  const [category, products, categories] = await Promise.all([getCategoryBySlug(slug), getStoreProducts(), getStoreCategories()]);
   if (!category) notFound();
   return (
     <Container className="py-12 sm:py-16">

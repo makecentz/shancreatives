@@ -16,7 +16,7 @@ function unique<T>(arr: (T | null)[]) {
   return [...new Set(arr.filter((x): x is T => x !== null))];
 }
 
-export function ProductPurchase({ product, productionEstimate, demo }: { product: Product; productionEstimate: string | null; demo: boolean }) {
+export function ProductPurchase({ product, productionEstimate, demo, sample = false }: { product: Product; productionEstimate: string | null; demo: boolean; sample?: boolean }) {
   const router = useRouter();
   const { add } = useCart();
   const variants = product.variants.filter((v) => v.isActive);
@@ -223,7 +223,12 @@ export function ProductPurchase({ product, productionEstimate, demo }: { product
       ) : null}
 
       {/* Actions */}
-      {product.quoteOnly ? (
+      {sample ? (
+        <div className="rounded-3xl bg-store-butter/60 p-5 text-sm sm:p-6">
+          <p className="font-heading font-bold">Sample product</p>
+          <p className="mt-1 text-store-ink/70">This is an example to show what the shop will look like. It isn&rsquo;t for sale yet.</p>
+        </div>
+      ) : product.quoteOnly ? (
         <div className="space-y-4 rounded-3xl border border-store-border p-5 sm:p-6">
           <h2 className="font-heading text-lg font-bold">Request a quote</h2>
           <p className="text-sm text-store-muted">Every keepsake is unique, so we&rsquo;ll review your request and email a quote. You only pay after you accept it.</p>

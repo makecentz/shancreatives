@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { CatalogView } from "@/components/store/catalog-view";
 import { Container } from "@/components/store/section";
-import { getCategories, getProducts } from "@/lib/data/catalog";
+import { getStoreCategories, getStoreProducts } from "@/lib/data/catalog";
 
 export const metadata: Metadata = {
   title: "Shop",
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ShopPage({ searchParams }: PageProps<"/shop">) {
-  const [sp, products, categories] = await Promise.all([searchParams, getProducts(), getCategories()]);
+  const [sp, products, categories] = await Promise.all([searchParams, getStoreProducts(), getStoreCategories()]);
   return (
     <Container className="py-12 sm:py-16">
       <header className="mb-10 max-w-2xl">
