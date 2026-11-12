@@ -1,11 +1,11 @@
 import { parseCatalogQuery, queryCatalog } from "@/lib/catalog";
-import { getProducts } from "@/lib/data/catalog";
+import { getStoreProducts } from "@/lib/data/catalog";
 import { startingPrice } from "@/lib/pricing";
 
 /** Public, read-only catalogue search. */
 export async function GET(req: Request) {
   const sp = Object.fromEntries(new URL(req.url).searchParams);
-  const result = queryCatalog(await getProducts(), parseCatalogQuery(sp));
+  const result = queryCatalog(await getStoreProducts(), parseCatalogQuery(sp));
   return Response.json({
     total: result.total,
     hasMore: result.hasMore,

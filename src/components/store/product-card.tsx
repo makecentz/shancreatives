@@ -30,7 +30,7 @@ export function ProductCard({ product, priority = false }: { product: Product; p
   const customizable = product.fulfillmentType !== "ready_made";
   const ready = isReadyToShip(product);
   const inStock = isInStock(product);
-  const canQuickAdd = product.fulfillmentType === "ready_made" && singleVariant && inStock;
+  const canQuickAdd = !product.isDemo && (product.fulfillmentType === "ready_made" && singleVariant && inStock);
 
   return (
     <article className="group relative flex flex-col">
@@ -53,7 +53,7 @@ export function ProductCard({ product, priority = false }: { product: Product; p
           {!inStock ? <Badge tone="outline">Sold out</Badge> : null}
         </div>
         {product.isDemo ? (
-          <span className="absolute bottom-3 right-3 rounded-full bg-white/80 px-2 py-0.5 text-[9px] font-medium uppercase tracking-wider text-store-muted">Demo product</span>
+          <span className="absolute bottom-3 right-3 rounded-full bg-white/80 px-2 py-0.5 text-[9px] font-medium uppercase tracking-wider text-store-muted">Sample product</span>
         ) : null}
       </Link>
       <div className="mt-4 flex flex-1 flex-col">

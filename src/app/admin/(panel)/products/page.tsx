@@ -1,13 +1,16 @@
 import { Plus } from "lucide-react";
 import Link from "next/link";
-import { setProductStatusFromForm } from "@/app/admin/actions/products";
+import { setProductStatusFromForm, setSampleProducts } from "@/app/admin/actions/products";
 import { ActionForm } from "@/components/admin/action-form";
 import { AdminHeader } from "@/components/admin/header";
-import { DataTable, Pill } from "@/components/admin/ui";
+import { Card, DataTable, Pill } from "@/components/admin/ui";
+import { hasPermission } from "@/lib/auth/roles";
 import { requirePermission } from "@/lib/auth/session";
 import { availableStock } from "@/lib/catalog";
 import { getAdminProducts } from "@/lib/data/admin";
-import { getCategories } from "@/lib/data/catalog";
+import { getCategories, getSampleProductsEnabled } from "@/lib/data/catalog";
+import { demoProducts } from "@/lib/demo/catalog";
+import { isDemoMode } from "@/lib/env";
 import { formatMoney } from "@/lib/money";
 import { startingPrice } from "@/lib/pricing";
 
@@ -16,12 +19,33 @@ export const metadata = { title: "Products" };
 const STATUS_TONE = { active: "green", draft: "gray", archived: "red", out_of_stock: "amber" } as const;
 
 export default async function AdminProductsPage() {
-  await requirePermission("products.manage");
-  const [products, categories] = await Promise.all([getAdminProducts(), getCategories()]);
+  const session = await requirePermission("products.manage");
+  const [products, categories, samplesOn] = await Promise.all([getAdminProducts(), getCategories(), getSampleProductsEnabled()]);
+  const demo = isDemoMode();
+  const canToggle = !demo && hasPermission(session.role, "content.manage");
   const catName = (id: string) => categories.find((c) => c.id === id)?.name ?? "";
   return (
     <div className="space-y-8">
       <AdminHeader title="Products" subtitle="Create, edit, publish, and archive products." />
+      {!demo ? (
+        <Card title="Sample products">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="text-sm">
+              <p className="flex items-center gap-2 font-medium">
+                <Pill tone={samplesOn ? "green" : "gray"}>{samplesOn ? "Showing on the store" : "Hidden"}</Pill>
+              </p>
+              <p className="mt-2 max-w-xl text-admin-muted">
+                {demoProducts.length} example products, each marked &ldquo;Sample product&rdquo;, so the shop doesn&rsquo;t look empty while you add your own. They can&rsquo;t be added to a cart or bought, and they never appear in orders or reports. They aren&rsquo;t listed below because they aren&rsquo;t saved in your database.
+              </p>
+            </div>
+            {canToggle ? (
+              <ActionForm action={setSampleProducts} submitLabel={samplesOn ? "Turn off sample products" : "Turn on sample products"} variant={samplesOn ? "outline" : "primary"}>
+                <input type="hidden" name="enabled" value={samplesOn ? "0" : "1"} />
+              </ActionForm>
+            ) : <p className="text-xs text-admin-muted">Only the owner or a manager can change this.</p>}
+          </div>
+        </Card>
+      ) : null}
       <div className="flex justify-end">
         <Link href="/admin/products/new" className="inline-flex h-10 items-center gap-2 rounded-lg bg-gradient-to-b from-admin-purple to-admin-purple-deep px-4 text-sm font-medium text-white"><Plus className="size-4" />New product</Link>
       </div>
