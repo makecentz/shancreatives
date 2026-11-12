@@ -146,7 +146,7 @@ export async function saveTaxSettings(form: FormData): Promise<ActionResult> {
   });
 }
 
-const contentKeys = ["heroEyebrow", "heroHeadline", "heroDescription", "heroImageUrl", "promoBanner", "aboutHeadline", "aboutBody", "contactEmail", "contactPhone", "footerTagline", "logoUrl", "faviconUrl"] as const;
+const contentKeys = ["heroEyebrow", "heroHeadline", "heroDescription", "heroImageUrl", "heroVideoUrl", "heroVideoPosterUrl", "promoBanner", "aboutHeadline", "aboutBody", "contactEmail", "contactPhone", "footerTagline", "logoUrl", "faviconUrl"] as const;
 
 /** Saves the site content draft and optionally publishes it. */
 export async function saveSiteContent(form: FormData): Promise<ActionResult> {
@@ -160,6 +160,10 @@ export async function saveSiteContent(form: FormData): Promise<ActionResult> {
     draft.heroPrimaryCta = { label: String(form.get("primaryLabel") || "Shop Now"), href: String(form.get("primaryHref") || "/shop") };
     draft.heroSecondaryCta = { label: String(form.get("secondaryLabel") || "Explore Custom Creations"), href: String(form.get("secondaryHref") || "/custom-orders") };
     draft.socialLinks = { instagram: String(form.get("instagram") || "") || undefined, facebook: String(form.get("facebook") || "") || undefined, tiktok: String(form.get("tiktok") || "") || undefined, pinterest: String(form.get("pinterest") || "") || undefined };
+    for (const k of ["heroVideoUrl", "heroVideoPosterUrl"] as const) {
+      const v = draft[k];
+      if (typeof v === "string" && !v.startsWith("https://") && !(v.startsWith("/") && !v.startsWith("//"))) throw new ActionError("Hero video and cover image links must start with https://");
+    }
     for (const [k, v] of Object.entries(draft)) if (v === null) delete draft[k];
     const publish = form.get("publish") === "1";
     const row: Record<string, unknown> = { key: "site", draft, updated_by: session.userId };

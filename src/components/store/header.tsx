@@ -41,7 +41,7 @@ export function StoreHeader({ logoUrl, promo }: { logoUrl: string | null; promo:
   return (
     <>
       {promo ? (
-        <div className="bg-store-ink px-4 py-2 text-center text-xs tracking-wide text-white">{promo}</div>
+        <div className="bg-store-rose px-4 py-2 text-center text-xs tracking-wide text-white">{promo}</div>
       ) : null}
       <header
         className={cn(

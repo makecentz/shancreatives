@@ -46,7 +46,7 @@ With an empty `.env.local` you get demo mode.
 
 1. Create a project at supabase.com.
 2. Run the migrations in order, either with the Supabase CLI (`supabase link` then `supabase db push`) or by pasting each file into the SQL editor:
-   `supabase/migrations/0001_schema.sql`, `0002_rls.sql`, `0003_functions.sql`, `0004_storage.sql`.
+   `supabase/migrations/0001_schema.sql`, `0002_rls.sql`, `0003_functions.sql`, `0004_storage.sql`, `0005_hero_video.sql`.
 3. From **Project Settings → API**, copy the URL and anon key into `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`, and the service role key into `SUPABASE_SERVICE_ROLE_KEY`. The service role key is only read in server code (`src/lib/supabase/server.ts` is marked `server-only`).
 4. **Auth → URL configuration:** set the Site URL to your domain and add `https://your-domain.com/**` to redirect URLs.
 5. **Create the first owner.** Sign up once at `/account` (or invite yourself under Auth → Users), then run this in the SQL editor:
@@ -65,6 +65,7 @@ With an empty `.env.local` you get demo mode.
 Storage buckets created by the migration:
 - `product-media` (public): product photos.
 - `site-assets` (public): logo, favicon and hero image.
+- `site-videos` (public): homepage hero background video (MP4/WebM, up to 50 MB).
 - `customer-uploads` (**private**): customer reference photos. These are only ever served through short-lived signed URLs.
 
 ---

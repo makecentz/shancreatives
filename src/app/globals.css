@@ -21,6 +21,15 @@
   --color-store-muted: #777777;
   --color-store-success: #4f7a5a;
   --color-store-danger: #b3452f;
+  /* Storefront accent colors: soft fills with a deeper shade for icons and text */
+  --color-store-blush: #f6dcd6;
+  --color-store-rose: #b5524a;
+  --color-store-sage: #e2ead8;
+  --color-store-sage-deep: #55704a;
+  --color-store-butter: #f8ebc4;
+  --color-store-butter-deep: #92691a;
+  --color-store-sky: #dce8f1;
+  --color-store-sky-deep: #3f6a8a;
 
   /* Admin: deep purple sidebar, pink accents, lavender cards */
   --color-admin-sidebar-from: #6a1b8a;
@@ -70,6 +79,16 @@ body {
 }
 .admin-nav-active {
   background: linear-gradient(90deg, #c2408a 0%, rgba(194, 64, 138, 0.35) 100%);
+}
+
+/* Hero background when no video is uploaded: soft color washes */
+.store-hero-wash {
+  background:
+    radial-gradient(40% 55% at 82% 28%, var(--color-store-blush) 0%, transparent 70%),
+    radial-gradient(35% 50% at 92% 78%, var(--color-store-butter) 0%, transparent 70%),
+    radial-gradient(30% 45% at 62% 88%, var(--color-store-sage) 0%, transparent 70%),
+    radial-gradient(30% 40% at 66% 12%, var(--color-store-sky) 0%, transparent 70%),
+    var(--color-store-cream);
 }
 
 @media (prefers-reduced-motion: reduce) {
