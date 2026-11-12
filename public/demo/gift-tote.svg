@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 480" role="img" aria-label="Canvas tote illustration">
+<defs><radialGradient id="sh" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#000" stop-opacity=".16"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>
+<ellipse cx="200" cy="452" rx="140" ry="14" fill="url(#sh)"/>
+<path d="M150 150 Q150 70 200 70 Q250 70 250 150" fill="none" stroke="#c9ad8f" stroke-width="14"/>
+<path d="M90 150 h220 l14 290 h-248z" fill="#efe6d8"/>
+<path d="M90 150 h220 l2 30 h-224z" fill="#e3d5c1"/>
+<g fill="#181818"><text x="200" y="300" font-family="Georgia,serif" font-size="34" text-anchor="middle">made</text><text x="200" y="342" font-family="Georgia,serif" font-style="italic" font-size="34" text-anchor="middle">with love</text></g>
+<path d="M200 362 c-10-12-26-4-20 8 l20 18 l20-18 c6-12-10-20-20-8z" fill="#c9ad8f"/>
+</svg>

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 480" role="img" aria-label="Custom keepsake doll illustration">
+  <defs><pattern id="b" width="10" height="9" patternUnits="userSpaceOnUse">
+    <rect width="10" height="9" fill="#e9c4a4"/>
+    <path d="M1 1 L5 7 L9 1" fill="none" stroke="#ad8868" stroke-opacity=".28" stroke-width="1.6" stroke-linecap="round"/>
+  </pattern><pattern id="a" width="10" height="9" patternUnits="userSpaceOnUse">
+    <rect width="10" height="9" fill="#8fb3c9"/>
+    <path d="M1 1 L5 7 L9 1" fill="none" stroke="#53778d" stroke-opacity=".28" stroke-width="1.6" stroke-linecap="round"/>
+  </pattern><pattern id="h" width="10" height="9" patternUnits="userSpaceOnUse">
+    <rect width="10" height="9" fill="#5a3b2a"/>
+    <path d="M1 1 L5 7 L9 1" fill="none" stroke="#280900" stroke-opacity=".28" stroke-width="1.6" stroke-linecap="round"/>
+  </pattern>
+  <radialGradient id="sh" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#000" stop-opacity=".16"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>
+  <ellipse cx="200" cy="452" rx="120" ry="16" fill="url(#sh)"/>
+  
+  <ellipse cx="132" cy="316" rx="26" ry="58" fill="url(#b)" transform="rotate(18 132 316)"/>
+  <ellipse cx="268" cy="316" rx="26" ry="58" fill="url(#b)" transform="rotate(-18 268 316)"/>
+  <path d="M138 270 Q200 236 262 270 L276 404 Q200 432 124 404Z" fill="url(#a)"/>
+  <ellipse cx="166" cy="420" rx="32" ry="26" fill="url(#b)"/><ellipse cx="234" cy="420" rx="32" ry="26" fill="url(#b)"/>
+  <circle cx="200" cy="180" r="84" fill="url(#b)"/>
+  <path d="M120 170 Q125 95 200 92 Q275 95 280 170 Q270 130 200 128 Q130 130 120 170Z" fill="url(#h)"/>
+       <path d="M122 168 Q110 230 128 262 L140 200Z" fill="url(#h)"/><path d="M278 168 Q290 230 272 262 L260 200Z" fill="url(#h)"/>
+  <ellipse cx="200" cy="204" rx="30" ry="22" fill="#ffe2c2"/>
+  <circle cx="172" cy="178" r="7" fill="#1d1a18"/><circle cx="228" cy="178" r="7" fill="#1d1a18"/>
+  <circle cx="174" cy="176" r="2" fill="#fff"/><circle cx="230" cy="176" r="2" fill="#fff"/>
+  <ellipse cx="200" cy="198" rx="8" ry="6" fill="#3a2a22"/>
+  <path d="M190 212 Q200 220 210 212" fill="none" stroke="#3a2a22" stroke-width="2.5" stroke-linecap="round"/>
+  <ellipse cx="150" cy="206" rx="12" ry="7" fill="#e88f9a" opacity=".45"/><ellipse cx="250" cy="206" rx="12" ry="7" fill="#e88f9a" opacity=".45"/>
+  <path d="M164 300 h72 v40 h-72z" fill="#fff" opacity=".85" rx="6"/><text x="200" y="327" font-family="Georgia,serif" font-size="18" text-anchor="middle" fill="#5a3b2a">Ava</text>
+</svg>

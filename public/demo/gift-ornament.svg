@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 480" role="img" aria-label="Personalized ornament illustration">
+<defs><radialGradient id="g" cx=".38" cy=".35" r=".7"><stop offset="0" stop-color="#fff"/><stop offset=".25" stop-color="#e9dccb"/><stop offset="1" stop-color="#b8976f"/></radialGradient>
+<radialGradient id="sh" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#000" stop-opacity=".16"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>
+<ellipse cx="200" cy="452" rx="100" ry="12" fill="url(#sh)"/>
+<path d="M200 30 v70" stroke="#181818" stroke-width="3"/><rect x="178" y="96" width="44" height="30" rx="5" fill="#2b2b2b"/>
+<circle cx="200" cy="270" r="150" fill="url(#g)"/>
+<text x="200" y="262" font-family="Georgia,serif" font-style="italic" font-size="40" text-anchor="middle" fill="#181818">The Millers</text>
+<text x="200" y="304" font-family="Arial" font-size="18" letter-spacing="6" text-anchor="middle" fill="#181818">EST. 2026</text>
+</svg>

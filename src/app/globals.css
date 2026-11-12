@@ -1,26 +1,80 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Two independent visual identities share one app.
+ *  - Storefront tokens live under the `store-*` namespace (white / tan / black).
+ *  - Admin tokens live under the `admin-*` namespace (purple / pink / lavender).
+ * Components in src/components/store only use store-* tokens and components in
+ * src/components/admin only use admin-* tokens, so the palettes never mix.
+ */
+@theme {
+  --font-heading: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* Storefront: boutique white, black, warm tan */
+  --color-store-bg: #ffffff;
+  --color-store-ink: #181818;
+  --color-store-tan: #c9ad8f;
+  --color-store-tan-deep: #a88b6c;
+  --color-store-cream: #f8f4ef;
+  --color-store-border: #e8e2dc;
+  --color-store-muted: #777777;
+  --color-store-success: #4f7a5a;
+  --color-store-danger: #b3452f;
+
+  /* Admin: deep purple sidebar, pink accents, lavender cards */
+  --color-admin-sidebar-from: #6a1b8a;
+  --color-admin-sidebar-to: #b22fc9;
+  --color-admin-purple: #7b1f8f;
+  --color-admin-purple-deep: #5a136b;
+  --color-admin-pink: #c2408a;
+  --color-admin-pink-soft: #f4d3e6;
+  --color-admin-lavender: #fdf2fa;
+  --color-admin-lilac: #e3d3e1;
+  --color-admin-row: #f2d4e6;
+  --color-admin-border: #e7c9de;
+  --color-admin-ink: #111111;
+  --color-admin-muted: #6b6470;
+  --color-admin-success: #16a34a;
+  --color-admin-warning: #eab308;
+  --color-admin-danger: #ef4444;
+  --color-admin-info: #2563eb;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  background: #ffffff;
+  color: #181818;
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+/* Storefront focus ring */
+.theme-store :focus-visible {
+  outline: 2px solid var(--color-store-tan-deep);
+  outline-offset: 2px;
+}
+.theme-admin :focus-visible {
+  outline: 2px solid var(--color-admin-pink);
+  outline-offset: 2px;
+}
+
+.admin-sidebar {
+  background: linear-gradient(180deg, var(--color-admin-sidebar-from) 0%, var(--color-admin-sidebar-to) 100%);
+}
+.admin-nav-active {
+  background: linear-gradient(90deg, #c2408a 0%, rgba(194, 64, 138, 0.35) 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
