@@ -4,6 +4,9 @@ import { Loader2, Upload } from "lucide-react";
 import * as React from "react";
 import { adminInput } from "./ui";
 
+const EXT_TYPES: Record<string, string> = { mp4: "video/mp4", m4v: "video/mp4", mov: "video/quicktime", webm: "video/webm", jpg: "image/jpeg", jpeg: "image/jpeg", png: "image/png", webp: "image/webp", svg: "image/svg+xml", ico: "image/x-icon" };
+const LABELS: Record<string, string> = { "video/quicktime": "MOV", "image/svg+xml": "SVG", "image/x-icon": "ICO" };
+
 type Props = {
   name: string;
   defaultValue?: string | null;
@@ -27,13 +30,15 @@ export function AssetInput({ name, defaultValue, demo, accept = "image/png,image
     if (!file) return;
     setErr(null);
     if (demo) return setErr("Uploads are disabled in demo mode.");
-    const allowed = accept.split(",").map((s) => s.trim());
-    if (!allowed.includes(file.type)) return setErr(`That file type isn't supported. Use ${allowed.map((t) => t.split("/")[1]?.toUpperCase()).join(" or ")}.`);
+    const allowed = accept.split(",").map((s) => s.trim()).filter((t) => t.includes("/"));
+    const ext = file.name.split(".").pop()?.toLowerCase() ?? "";
+    const type = file.type || EXT_TYPES[ext] || "";
+    if (!allowed.includes(type)) return setErr(`That file type isn't supported. Use ${allowed.map((t) => LABELS[t] ?? t.split("/")[1]?.toUpperCase()).join(" or ")}.`);
     if (file.size > maxMb * 1024 * 1024) return setErr(`Use a ${kind} up to ${maxMb} MB. This one is ${(file.size / 1024 / 1024).toFixed(1)} MB.`);
     setBusy(true);
     const { supabaseBrowser } = await import("@/lib/supabase/client");
     const path = `${name}/${crypto.randomUUID()}.${file.name.split(".").pop()?.toLowerCase()}`;
-    const { error } = await supabaseBrowser().storage.from(bucket).upload(path, file, { contentType: file.type, cacheControl: "31536000" });
+    const { error } = await supabaseBrowser().storage.from(bucket).upload(path, file, { contentType: type, cacheControl: "31536000" });
     setBusy(false);
     if (error) return setErr(/bucket not found/i.test(error.message) ? `The ${bucket} storage bucket hasn't been set up yet. Run the setup SQL in Supabase first.` : error.message);
     setValue(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${bucket}/${path}`);
